@@ -1,7 +1,7 @@
 use core::fmt;
 use std::error::Error;
 
-mod year2015;
+mod year2025;
 
 #[derive(Debug, Clone)]
 pub enum AocError {
@@ -26,7 +26,7 @@ impl Error for AocError {}
 
 pub fn run(year: u16, day: u8, part: u8) -> Result<String, AocError> {
     match year {
-        2015 => year2015::run(day, part),
+        2025 => year2025::run(day, part),
         other => Err(AocError::YearNotFound { year: other }),
     }
 }
