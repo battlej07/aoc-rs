@@ -28,8 +28,49 @@ pub fn part1(input: String) -> u64 {
     sum
 }
 
-pub fn part2(input: String) -> u32 {
-    todo!()
+pub fn part2(input: String) -> u64 {
+    let ranges = input.split(",").map(parse_range);
+
+    let mut sum = 0;
+
+    let is_repeating = |range: &str| {
+        let len = range.len();
+
+        for chunk_size in 1..=len / 2 {
+            if !len.is_multiple_of(chunk_size) {
+                continue;
+            }
+
+            let block = &range[0..chunk_size];
+            let mut is_valid = true;
+
+            let mut i = 0;
+
+            while i < len {
+                if &range[i..i + chunk_size] != block {
+                    is_valid = false;
+                    break;
+                }
+                i += chunk_size
+            }
+
+            if is_valid {
+                return true;
+            }
+        }
+
+        false
+    };
+
+    for (lower, upper) in ranges {
+        for i in lower..=upper {
+            if is_repeating(&i.to_string()) {
+                sum += i;
+            }
+        }
+    }
+
+    sum
 }
 
 fn parse_range(range_str: &str) -> (u64, u64) {
@@ -43,7 +84,7 @@ fn parse_range(range_str: &str) -> (u64, u64) {
 
 #[cfg(test)]
 mod test {
-    use crate::year2025::day02::{parse_range, part1};
+    use crate::year2025::day02::{parse_range, part1, part2};
 
     #[test]
     fn parse_range_test() {
@@ -60,6 +101,8 @@ mod test {
 
     #[test]
     fn part2_example() {
-        todo!();
+        let input = "11-22,95-115,998-1012,1188511880-1188511890,222220-222224,1698522-1698528,446443-446449,38593856-38593862,565653-565659,824824821-824824827,2121212118-2121212124".to_string();
+
+        assert_eq!(4174379265, part2(input));
     }
 }
