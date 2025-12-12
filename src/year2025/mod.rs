@@ -5,6 +5,7 @@ use crate::AocError;
 mod day01;
 mod day02;
 mod day03;
+mod day04;
 
 pub fn run(day: u8, part: u8) -> Result<String, AocError> {
     match day {
@@ -29,6 +30,15 @@ pub fn run(day: u8, part: u8) -> Result<String, AocError> {
         3 => match part {
             1 => Ok(day03::part1(read_file_to_string(day03::INPUT_PATH)).to_string()),
             2 => Ok(day03::part2(read_file_to_string(day03::INPUT_PATH)).to_string()),
+            _ => Err(AocError::PartNotFound {
+                year: 2025,
+                day,
+                part,
+            }),
+        },
+        4 => match part {
+            1 => Ok(day04::part1(read_file_to_string(day04::INPUT_PATH)).to_string()),
+            2 => Ok(day04::part2(read_file_to_string(day04::INPUT_PATH)).to_string()),
             _ => Err(AocError::PartNotFound {
                 year: 2025,
                 day,
